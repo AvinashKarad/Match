@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CricketModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CricketModelStoreContainer">
+          <EntitySet Name="Match" EntityType="CricketModel.Store.Match" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Player_Match_Mapping" EntityType="CricketModel.Store.Player_Match_Mapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Players" EntityType="CricketModel.Store.Players" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayerType" EntityType="CricketModel.Store.PlayerType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Team" EntityType="CricketModel.Store.Team" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Match__Team_One__164452B1" Association="CricketModel.Store.FK__Match__Team_One__164452B1">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Match__Team_Two__173876EA" Association="CricketModel.Store.FK__Match__Team_Two__173876EA">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Match" EntitySet="Match" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Match__1A14E395" Association="CricketModel.Store.FK__Player_Ma__Match__1A14E395">
+            <End Role="Match" EntitySet="Match" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Playe__1BFD2C07" Association="CricketModel.Store.FK__Player_Ma__Playe__1BFD2C07">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Playe__1CF15040" Association="CricketModel.Store.FK__Player_Ma__Playe__1CF15040">
+            <End Role="PlayerType" EntitySet="PlayerType" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__TeamI__1B0907CE" Association="CricketModel.Store.FK__Player_Ma__TeamI__1B0907CE">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Match_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Match_Date" Type="varchar" MaxLength="50" />
+          <Property Name="Team_One" Type="int" />
+          <Property Name="Team_Two" Type="int" />
+          <Property Name="Start_Time" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Player_Match_Mapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MatchId" Type="int" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="PlayerTypeId" Type="int" />
+          <Property Name="Position" Type="int" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PlayerType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Player_Type_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Team_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Match__Team_One__164452B1">
+          <End Role="Team" Type="CricketModel.Store.Team" Multiplicity="0..1" />
+          <End Role="Match" Type="CricketModel.Store.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="Team_One" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Match__Team_Two__173876EA">
+          <End Role="Team" Type="CricketModel.Store.Team" Multiplicity="0..1" />
+          <End Role="Match" Type="CricketModel.Store.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="Team_Two" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Match__1A14E395">
+          <End Role="Match" Type="CricketModel.Store.Match" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Store.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Playe__1BFD2C07">
+          <End Role="Players" Type="CricketModel.Store.Players" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Store.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Playe__1CF15040">
+          <End Role="PlayerType" Type="CricketModel.Store.PlayerType" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Store.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="PlayerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__TeamI__1B0907CE">
+          <End Role="Team" Type="CricketModel.Store.Team" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Store.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CricketModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CricketEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Matches" EntityType="CricketModel.Match" />
+          <EntitySet Name="Player_Match_Mapping" EntityType="CricketModel.Player_Match_Mapping" />
+          <EntitySet Name="Players" EntityType="CricketModel.Player" />
+          <EntitySet Name="PlayerTypes" EntityType="CricketModel.PlayerType" />
+          <EntitySet Name="Teams" EntityType="CricketModel.Team" />
+          <AssociationSet Name="FK__Match__Team_One__164452B1" Association="CricketModel.FK__Match__Team_One__164452B1">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Match__Team_Two__173876EA" Association="CricketModel.FK__Match__Team_Two__173876EA">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Match__1A14E395" Association="CricketModel.FK__Player_Ma__Match__1A14E395">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Playe__1BFD2C07" Association="CricketModel.FK__Player_Ma__Playe__1BFD2C07">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__Playe__1CF15040" Association="CricketModel.FK__Player_Ma__Playe__1CF15040">
+            <End Role="PlayerType" EntitySet="PlayerTypes" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Player_Ma__TeamI__1B0907CE" Association="CricketModel.FK__Player_Ma__TeamI__1B0907CE">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Player_Match_Mapping" EntitySet="Player_Match_Mapping" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Match_Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Match_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Team_One" Type="Int32" />
+          <Property Name="Team_Two" Type="Int32" />
+          <Property Name="Start_Time" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Team" Relationship="CricketModel.FK__Match__Team_One__164452B1" FromRole="Match" ToRole="Team" />
+          <NavigationProperty Name="Team1" Relationship="CricketModel.FK__Match__Team_Two__173876EA" FromRole="Match" ToRole="Team" />
+          <NavigationProperty Name="Player_Match_Mapping" Relationship="CricketModel.FK__Player_Ma__Match__1A14E395" FromRole="Match" ToRole="Player_Match_Mapping" />
+        </EntityType>
+        <EntityType Name="Player_Match_Mapping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchId" Type="Int32" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="PlayerTypeId" Type="Int32" />
+          <Property Name="Position" Type="Int32" />
+          <NavigationProperty Name="Match" Relationship="CricketModel.FK__Player_Ma__Match__1A14E395" FromRole="Player_Match_Mapping" ToRole="Match" />
+          <NavigationProperty Name="Player" Relationship="CricketModel.FK__Player_Ma__Playe__1BFD2C07" FromRole="Player_Match_Mapping" ToRole="Players" />
+          <NavigationProperty Name="PlayerType" Relationship="CricketModel.FK__Player_Ma__Playe__1CF15040" FromRole="Player_Match_Mapping" ToRole="PlayerType" />
+          <NavigationProperty Name="Team" Relationship="CricketModel.FK__Player_Ma__TeamI__1B0907CE" FromRole="Player_Match_Mapping" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Player_Match_Mapping" Relationship="CricketModel.FK__Player_Ma__Playe__1BFD2C07" FromRole="Players" ToRole="Player_Match_Mapping" />
+        </EntityType>
+        <EntityType Name="PlayerType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Player_Type_Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Player_Match_Mapping" Relationship="CricketModel.FK__Player_Ma__Playe__1CF15040" FromRole="PlayerType" ToRole="Player_Match_Mapping" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Team_Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Matches" Relationship="CricketModel.FK__Match__Team_One__164452B1" FromRole="Team" ToRole="Match" />
+          <NavigationProperty Name="Matches1" Relationship="CricketModel.FK__Match__Team_Two__173876EA" FromRole="Team" ToRole="Match" />
+          <NavigationProperty Name="Player_Match_Mapping" Relationship="CricketModel.FK__Player_Ma__TeamI__1B0907CE" FromRole="Team" ToRole="Player_Match_Mapping" />
+        </EntityType>
+        <Association Name="FK__Match__Team_One__164452B1">
+          <End Role="Team" Type="CricketModel.Team" Multiplicity="0..1" />
+          <End Role="Match" Type="CricketModel.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="Team_One" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Match__Team_Two__173876EA">
+          <End Role="Team" Type="CricketModel.Team" Multiplicity="0..1" />
+          <End Role="Match" Type="CricketModel.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="Team_Two" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Match__1A14E395">
+          <End Role="Match" Type="CricketModel.Match" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Match">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Playe__1BFD2C07">
+          <End Role="Players" Type="CricketModel.Player" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__Playe__1CF15040">
+          <End Role="PlayerType" Type="CricketModel.PlayerType" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="PlayerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Player_Ma__TeamI__1B0907CE">
+          <End Role="Team" Type="CricketModel.Team" Multiplicity="0..1" />
+          <End Role="Player_Match_Mapping" Type="CricketModel.Player_Match_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player_Match_Mapping">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CricketModelStoreContainer" CdmEntityContainer="CricketEntities">
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="CricketModel.Match">
+              <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Match_Name" ColumnName="Match_Name" />
+                <ScalarProperty Name="Match_Date" ColumnName="Match_Date" />
+                <ScalarProperty Name="Team_One" ColumnName="Team_One" />
+                <ScalarProperty Name="Team_Two" ColumnName="Team_Two" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player_Match_Mapping">
+            <EntityTypeMapping TypeName="CricketModel.Player_Match_Mapping">
+              <MappingFragment StoreEntitySet="Player_Match_Mapping">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PlayerTypeId" ColumnName="PlayerTypeId" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="CricketModel.Player">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerTypes">
+            <EntityTypeMapping TypeName="CricketModel.PlayerType">
+              <MappingFragment StoreEntitySet="PlayerType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Player_Type_Name" ColumnName="Player_Type_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="CricketModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Team_Name" ColumnName="Team_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

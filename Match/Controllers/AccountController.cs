@@ -8,10 +8,10 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Match.Filters;
-using Match.Models;
+using CricketMatchProject.Filters;
+using CricketMatchProject.Models;
 
-namespace Match.Controllers
+namespace CricketMatchProject.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

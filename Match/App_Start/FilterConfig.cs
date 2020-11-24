@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Match
+namespace CricketMatchProject
 {
     public class FilterConfig
     {

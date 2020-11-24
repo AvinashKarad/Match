@@ -416,9 +416,15 @@ fieldset {
 
 label {
     display: block;
-    font-size: 1.2em;
+    font-size: 16px;
     font-weight: 600;
 }
+
+.star {
+color:red;
+}
+
+
 
 label.checkbox {
     display: inline;
@@ -431,7 +437,11 @@ input, textarea {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
+    width: 460px;
+}
+
+#Position {
+    width: 280px;
 }
 
 textarea {

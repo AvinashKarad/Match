@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using Match.Models;
+using CricketMatchProject.Models;
 
-namespace Match
+namespace CricketMatchProject
 {
     public static class AuthConfig
     {

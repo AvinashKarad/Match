@@ -1,0 +1,332 @@
+﻿@model CricketMatchProject.Models.MatchViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<h2 class="text-center">Match Form</h2>
+<br />
+
+@using (Html.BeginForm("Create", "Match", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Match_Name) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.EditorFor(model => model.Match_Name)
+                @Html.ValidationMessageFor(model => model.Match_Name)
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Match_Date) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.EditorFor(model => model.Match_Date)
+                @Html.ValidationMessageFor(model => model.Match_Date)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Team_One) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.DropDownListFor(model => model.Team_One,
+                new SelectList(Model.teams, "Id", "Team_Name"), "Select Team 1",
+                new { @class = "form-control drop " })
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Team_Two) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.DropDownListFor(model => model.Team_Two,
+                new SelectList(Model.teams, "Id", "Team_Name"), "Select Team 2",
+                new { @class = "form-control drop ", @id = "customInput" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Start_Time) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.EditorFor(model => model.Start_Time)
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <label>@Html.LabelFor(model => model.Address) <span class="star">*</span></label>
+            </div>
+            <div>
+                @Html.EditorFor(model => model.Address)
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary float-right" id="add-modal" data-toggle="modal" data-target="#exampleModal">
+        Add Players
+    </button>
+    <br />
+    <br />
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Player</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>                     
+@*                        <div class="hidden" id="entity-key">{{ moviequote.key.urlsafe() }}</div>
+                        <div class="hidden" id="PlayerId">{{ moviequote.PlayerId }}</div>*@
+                    </button>
+                </div>
+                <input type="text" name="entity_key" class="hidden">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Name <span class="star">*</span></label>
+                            </div>
+                            <div class="col-md-8">@Html.DropDownListFor(model => model.PlayerId, new SelectList(Model.players, "Id", "Name"), "Select Player", new { @class = "form-control", @id = "DDLPlayer" })</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="row">
+                            @Html.HiddenFor(model => model.PlayerTypeId, new SelectList(Model.playerType, "Id", "Player_Type_Name"))
+                            <div class="col-md-4">
+                                <label>Player Type <span class="star">*</span></label>
+                            </div>
+                            <div class="col-md-8">@Html.DropDownListFor(model => model.PlayerTypeId, new SelectList(Model.playerType, "Id", "Player_Type_Name"), "Select Type", new { @class = "form-control", @id = "DDLPlayerType" })</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Position <span class="star">*</span></label>
+                            </div>
+                            <div class="col-md-8">@Html.EditorFor(model => model.Position)</div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Team <span class="star">*</span></label>
+                            </div>
+                            <div class="col-md-8">@Html.DropDownListFor(model => model.TeamId, new SelectList(Model.teams, "Id", "Team_Name"), "Select Team", new { @class = "form-control", @id = "DDLTeam" })</div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary add-row" data-dismiss="modal">Add Player</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-bordered table-striped" id="tblSurgeonListWithPractice">
+                <thead>
+                    <tr data-active="No">
+                        <th>Player</th>
+                        <th>Type</th>
+                        <th>Position</th>
+                        <th>Team</th>
+                        <th>Action</th>
+
+                        @*<th style="visibility: hidden;">ID</th>*@
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+    <br />
+    <p>
+        <button type="submit" value="Submit" class="btn btn-success float-right">Submit</button>
+    </p>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        $("table tbody").hide();
+        $(".add-row").click(function () {
+
+            var player = document.getElementById("DDLPlayer");
+            var PlayerName = player.options[player.selectedIndex].text;
+            var PlayerID = player.options[player.selectedIndex].val;
+
+            var type = document.getElementById("DDLPlayerType");
+            var PlayerTypeName = type.options[type.selectedIndex].text;
+            var PlayerTypeID = type.options[type.selectedIndex].val;
+
+            var Position = $("#Position").val();
+
+            var team = document.getElementById("DDLTeam");
+            var TeamName = team.options[team.selectedIndex].text;
+            var TeamID = team.options[team.selectedIndex].val;
+
+            $("modal-body").hide();
+            $("table tbody").show();
+
+            $("table tbody").append("<tr>" +
+                "<td>" + PlayerName + "</td>" +
+                "<td>" + PlayerTypeName + "</td>" +
+                "<td>" + Position + "</td>" +
+                "<td>" + TeamName + "</td>" +
+                "<td><img src='images/delete.png' class='btnDelete' width='20'/>&nbsp;<img src='images/edit.png' class='edit-modal' width='20' data-toggle='modal' data-target='#exampleModal'/></td>" +
+                "</tr>");
+
+            //$("td:nth-child(4),th:nth-child(4)").hide();    <img src='images/delete.png' class='btnDelete' width='20'/>
+
+
+            $("#btnSave").attr("disabled", false);
+
+            $(".btnDelete").bind("click", function () {
+                var par = $(this).parent().parent(); //tr 
+                par.remove();
+            });
+
+
+            //To change the model title to Edit Player
+            $('.edit-modal').click(function(){
+                $('#exampleModal .modal-title').html("Edit a Player")
+                $('#exampleModal button[type=submit]').html("Edit Player")
+                
+                PlayerId = $(this).find("#PlayerId").html;
+                entitykey = $(this).find("#entity-key").html;
+                $('#exampleModal select[name=PlayerId]').val(PlayerId);
+                $('#exampleModal select[name=PlayerTypeId]').val();
+                $('#exampleModal input[name=Position]').val();
+                $('#exampleModal select[name=TeamId]').val();
+                $('#exampleModal select[name=entity_key]').val(entitykey).prop("disabled", false);
+            });
+        });
+
+        //To change the model title to Add Player
+        $('#add-modal').click(function(){
+            $('#exampleModal .modal-title').html("Add a Player")
+            $('#exampleModal button[type=submit]').html("Add Player")
+
+            $('#exampleModal select[name=PlayerId]').val("");
+            $('#exampleModal select[name=PlayerTypeId]').val("");
+            $('#exampleModal input[name=Position]').val("");
+            $('#exampleModal select[name=TeamId]').val("");
+            $('#exampleModal select[name=entity_key]').val("").prop("disabled", true);
+        });
+
+
+
+
+
+
+
+
+
+
+        //THis code is for empty the all input field when you submit/close modal
+        $('[data-dismiss=modal]').on('click', function (e) {
+            var $t = $(this),
+                target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
+
+            $(target)
+              .find("input,textarea,select")
+                 .val('')
+                 .end()
+              .find("input[type=checkbox], input[type=radio]")
+                 .prop("checked", "")
+                 .end();
+        })
+
+
+    });
+
+
+
+
+    //Dropdown change event for Team select
+    var $drops = $('.drop'),
+        // store a set of options
+        $options = $drops.eq(1).children().clone();
+
+    $drops.change(function () {
+        var $other = $drops.not(this),
+            otherVal = $other.val(),
+            newVal = $(this).val(),
+            $opts = $options.clone().filter(function () {
+                return this.value !== newVal;
+            })
+        $other.html($opts).val(otherVal);
+
+    })
+
+
+
+    // Edit functionality
+
+    //$(function() {
+    //    $('#exampleModal').on('show.bs.modal', function(e) {
+    //        $('.modalTextInput').val('');
+    //        let btn = $(e.relatedTarget); // e.related here is the element that opened the modal, specifically the row button
+    //        let id = btn.data('id'); // this is how you get the of any `data` attribute of an element
+    //        $('.saveEdit').data('id', id); // then pass it to the button inside the modal
+    //    })
+
+    //    $('.saveEdit').on('click', function() {
+    //        let id = $(this).data('id'); // the rest is just the same
+    //        saveNote(id);
+    //        $('#exampleModal').modal('toggle'); // this is to close the modal after clicking the modal button
+    //    })
+    //})
+
+    //function saveNote(id) {
+    //    let text = $('.modalTextInput').val();
+    //    $('.recentNote').data('note', text);
+    //    console.log($('.recentNote').data('note'));
+    //    console.log(text + ' --> ' + id);
+    //}
+
+
+
+
+</script>

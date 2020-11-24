@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace Match.Models
+namespace CricketMatchProject.Models
 {
     public class UsersContext : DbContext
     {
